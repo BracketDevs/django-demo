@@ -24,6 +24,12 @@ SECRET_KEY = 'oesxk=)*h!tdkoer60i98d^&)d56u%h*-sx_2(m!p*e0vf^k)k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+if DEBUG:
+    # Deprecated. https://docs.djangoproject.com/en/1.9/ref/settings/#template-debug
+    TEMPLATE_DEBUG= True
+    # see all of Djangos debug logging which is very verbose as it includes all database queries. Info default
+    os.environ['DJANGO_LOG_LEVEL'] = 'DEBUG'
+
 
 ALLOWED_HOSTS = []
 
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rango',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -119,3 +126,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Setup Logging
+# https://docs.djangoproject.com/en/1.9/topics/logging/
+
+if DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'console': {
+                'class': 'logging.StreamHandler',
+            },
+        },
+        'loggers': {
+            'rango': {
+                'handlers': ['console'],
+                'propagate': False,
+                'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            },
+        },
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+            },
+        }
+    }
