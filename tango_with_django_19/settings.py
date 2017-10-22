@@ -14,12 +14,19 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# If your secret key's available, your whole app is compromised. If that app is deployed on a server,
+# then your server's security is potentially compromised: as the secret key can be used to sign malicious code, etc
+# Take your key out of version control, and use environment variables - http://heldercorreia.com/blog/secrets-in-the-environment
 SECRET_KEY = 'oesxk=)*h!tdkoer60i98d^&)d56u%h*-sx_2(m!p*e0vf^k)k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -62,7 +69,7 @@ ROOT_URLCONF = 'tango_with_django_19.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Django provides a template context processor https://docs.djangoproject.com/en/1.9/ref/templates/api/#django-template-context-processors-media
+                'django.template.context_processors.media'
             ],
         },
     },
@@ -125,7 +134,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/' # location with which clients can access static content
+STATICFILES_DIRS = [STATIC_DIR, ] # server-side locations
+
+# Media files
+# The vars will be picked up and used by Django to set up media file hosting https://docs.djangoproject.com/en/1.9/howto/static-files/#serving-files-uploaded-by-a-user-during-development
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = '/media/'
 
 # Setup Logging
 # https://docs.djangoproject.com/en/1.9/topics/logging/
