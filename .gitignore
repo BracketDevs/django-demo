@@ -32,5 +32,8 @@
 ## Python
 *.pyc
 
+## Don't track DB (for case of multiple devs, db conflicts)
+db.sqlite3
+
 # generated files from repo
 #output/
