@@ -44,12 +44,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # default applications are included for the common case, but not everybody needs them
+    'django.contrib.admin', # admin site
+    'django.contrib.auth', # authentication system
+    'django.contrib.contenttypes', # framework for content types
+    'django.contrib.sessions', # session framework
+    'django.contrib.messages', # messaging framework
+    'django.contrib.staticfiles', # framework for managing static files.
     'rango',
 ]
 
